@@ -14,7 +14,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
   onClose,
   preselectedCustomerId
 }) => {
-  const { customers, createInvoice, formatCurrency } = useBrightloop();
+  const { customers, createInvoice, formatCurrency, currency } = useBrightloop();
 
   const [customerId, setCustomerId] = useState(preselectedCustomerId || customers[0]?.id || '');
   const [issueDate, setIssueDate] = useState(new Date().toISOString().split('T')[0]);
@@ -23,7 +23,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
   defaultDue.setDate(defaultDue.getDate() + 14);
   const [dueDate, setDueDate] = useState(defaultDue.toISOString().split('T')[0]);
 
-  const [taxRatePercent, setTaxRatePercent] = useState(8.5);
+  const [taxRatePercent, setTaxRatePercent] = useState(18); // Default 18% GST in India
   const [discountAmount, setDiscountAmount] = useState(0);
   const [notes, setNotes] = useState('Payment due within 14 days of invoice issuance. Late balances accrue 1.5% monthly finance charge.');
 
@@ -32,8 +32,8 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
       id: 'item_init_1',
       description: 'Brightloop SaaS License - Monthly Allocation',
       quantity: 1,
-      unitPrice: 399.00,
-      amount: 399.00
+      unitPrice: currency === 'INR' ? 12999 : 399.00,
+      amount: currency === 'INR' ? 12999 : 399.00
     }
   ]);
 
@@ -42,14 +42,15 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
   const selectedCustomer = customers.find(c => c.id === customerId);
 
   const handleAddItem = () => {
+    const defaultPrice = currency === 'INR' ? 2499 : 50.00;
     setItems(prev => [
       ...prev,
       {
         id: 'item_' + Date.now(),
         description: 'Additional Add-on / Capacity Quota',
         quantity: 1,
-        unitPrice: 50.00,
-        amount: 50.00
+        unitPrice: defaultPrice,
+        amount: defaultPrice
       }
     ]);
   };
@@ -104,22 +105,22 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
       <div
-        className="w-full max-w-2xl bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]"
+        className="w-full max-w-2xl bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[90vh] transition-colors"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50/50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg">
+            <div className="p-2 bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 rounded-lg">
               <FilePlus2 className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-900">Issue B2B Invoice</h2>
-              <p className="text-xs text-slate-500">Draft itemized statement with sales tax and net terms</p>
+              <h2 className="text-base font-bold text-slate-900 dark:text-white">Issue B2B Invoice</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Draft itemized statement with GST / sales tax and net terms</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+            className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -128,14 +129,14 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="sm:col-span-1">
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Recipient Customer *
               </label>
               <select
                 required
                 value={customerId}
                 onChange={(e) => setCustomerId(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:border-blue-500 bg-white"
+                className="w-full px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg focus:outline-hidden focus:border-blue-500 cursor-pointer"
               >
                 {customers.map((c) => (
                   <option key={c.id} value={c.id}>
@@ -146,7 +147,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Issue Date
               </label>
               <input
@@ -154,12 +155,12 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
                 required
                 value={issueDate}
                 onChange={(e) => setIssueDate(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:border-blue-500"
+                className="w-full px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg focus:outline-hidden focus:border-blue-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Due Date
               </label>
               <input
@@ -167,7 +168,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
                 required
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:border-blue-500"
+                className="w-full px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg focus:outline-hidden focus:border-blue-500"
               />
             </div>
           </div>
@@ -175,21 +176,21 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
           {/* Line items section */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-slate-800 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
                 Line Items
               </span>
               <button
                 type="button"
                 onClick={handleAddItem}
-                className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
+                className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add Item
               </button>
             </div>
 
-            <div className="space-y-2 border border-slate-200 rounded-lg p-3 bg-slate-50/50">
-              {items.map((item, idx) => (
+            <div className="space-y-2 border border-slate-200 dark:border-slate-700 rounded-lg p-3 bg-slate-50/50 dark:bg-slate-800/40">
+              {items.map((item) => (
                 <div key={item.id} className="flex items-center gap-2">
                   <div className="flex-1">
                     <input
@@ -197,7 +198,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
                       value={item.description}
                       onChange={(e) => handleItemChange(item.id, 'description', e.target.value)}
                       placeholder="Item description"
-                      className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded focus:outline-hidden focus:border-blue-500"
+                      className="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded focus:outline-hidden focus:border-blue-500"
                     />
                   </div>
                   <div className="w-16">
@@ -207,7 +208,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
                       value={item.quantity}
                       onChange={(e) => handleItemChange(item.id, 'quantity', e.target.value)}
                       placeholder="Qty"
-                      className="w-full px-2 py-1.5 text-xs bg-white border border-slate-300 rounded focus:outline-hidden focus:border-blue-500 font-mono text-center"
+                      className="w-full px-2 py-1.5 text-xs bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded focus:outline-hidden focus:border-blue-500 font-mono text-center"
                     />
                   </div>
                   <div className="w-24">
@@ -218,10 +219,10 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
                       value={item.unitPrice}
                       onChange={(e) => handleItemChange(item.id, 'unitPrice', e.target.value)}
                       placeholder="Rate"
-                      className="w-full px-2 py-1.5 text-xs bg-white border border-slate-300 rounded focus:outline-hidden focus:border-blue-500 font-mono text-right"
+                      className="w-full px-2 py-1.5 text-xs bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded focus:outline-hidden focus:border-blue-500 font-mono text-right"
                     />
                   </div>
-                  <div className="w-20 text-right text-xs font-mono font-medium text-slate-700">
+                  <div className="w-20 text-right text-xs font-mono font-medium text-slate-700 dark:text-slate-300">
                     {formatCurrency(item.amount)}
                   </div>
                   <button
@@ -240,8 +241,8 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
           {/* Tax and Discount settings */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Sales Tax Rate (%)
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                GST / Sales Tax Rate (%)
               </label>
               <input
                 type="number"
@@ -250,12 +251,12 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
                 max={50}
                 value={taxRatePercent}
                 onChange={(e) => setTaxRatePercent(Number(e.target.value))}
-                className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:border-blue-500 font-mono"
+                className="w-full px-3 py-1.5 text-xs border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg focus:outline-hidden focus:border-blue-500 font-mono"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Discount Deduction ($)
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                Discount Deduction ({currency === 'INR' ? '₹' : '$'})
               </label>
               <input
                 type="number"
@@ -263,50 +264,50 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
                 min={0}
                 value={discountAmount}
                 onChange={(e) => setDiscountAmount(Number(e.target.value))}
-                className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:border-blue-500 font-mono"
+                className="w-full px-3 py-1.5 text-xs border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg focus:outline-hidden focus:border-blue-500 font-mono"
               />
             </div>
           </div>
 
           {/* Summary Box */}
-          <div className="p-3 bg-slate-100 rounded-lg space-y-1.5 text-xs">
-            <div className="flex justify-between text-slate-600">
+          <div className="p-3 bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-lg space-y-1.5 text-xs">
+            <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Subtotal:</span>
               <span className="font-mono">{formatCurrency(subtotal)}</span>
             </div>
             {discountAmount > 0 && (
-              <div className="flex justify-between text-emerald-600">
+              <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
                 <span>Discount Deduction:</span>
                 <span className="font-mono">-{formatCurrency(discountAmount)}</span>
               </div>
             )}
-            <div className="flex justify-between text-slate-600">
+            <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Estimated Tax ({taxRatePercent}%):</span>
               <span className="font-mono">{formatCurrency(tax)}</span>
             </div>
-            <div className="flex justify-between font-bold text-slate-900 pt-1.5 border-t border-slate-300 text-sm">
+            <div className="flex justify-between font-bold text-slate-900 dark:text-white pt-1.5 border-t border-slate-300 dark:border-slate-700 text-sm">
               <span>Invoice Total:</span>
-              <span className="font-mono text-blue-600">{formatCurrency(total)}</span>
+              <span className="font-mono text-blue-600 dark:text-blue-400">{formatCurrency(total)}</span>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
               Invoice Terms & Notes
             </label>
             <textarea
               rows={2}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:border-blue-500"
+              className="w-full px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg focus:outline-hidden focus:border-blue-500"
             />
           </div>
 
-          <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-2">
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
+              className="px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer"
             >
               Cancel
             </button>

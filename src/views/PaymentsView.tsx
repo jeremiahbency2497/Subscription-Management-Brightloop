@@ -61,32 +61,32 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({ onRefundPayment }) =
   return (
     <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
         <div>
-          <h2 className="text-lg font-bold text-slate-900 tracking-tight">Payments & Settlement Ledger</h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Payments & Settlement Ledger</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Credit card captures, ACH direct deposits, merchant fees, and customer refunds
           </p>
         </div>
 
         <button
           onClick={handleExportCSV}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750 rounded-lg transition-colors cursor-pointer"
         >
-          <Download className="w-3.5 h-3.5 text-slate-500" />
+          <Download className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
           <span>Export Ledger</span>
         </button>
       </div>
 
       {/* Dunning Alert if failed transactions exist */}
       {failedCount > 0 && (
-        <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+        <div className="p-4 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900/60 rounded-xl flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
           <div className="flex-1">
-            <h4 className="text-xs font-bold text-rose-900">
+            <h4 className="text-xs font-bold text-rose-900 dark:text-rose-200">
               {failedCount} Failed Transaction Requiring Attention
             </h4>
-            <p className="text-xs text-rose-700 mt-0.5 leading-relaxed">
+            <p className="text-xs text-rose-700 dark:text-rose-300 mt-0.5 leading-relaxed">
               Automated smart dunning has notified customer(s) to refresh card on file. You can retry the card gateway charge manually below.
             </p>
           </div>
@@ -95,66 +95,66 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({ onRefundPayment }) =
 
       {/* Payment Settlement Strip */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 bg-white rounded-xl border border-slate-200">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
+          <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             Gross Captured Volume
           </span>
-          <span className="text-xl font-bold font-mono text-slate-900 mt-1 block">
+          <span className="text-xl font-bold font-mono text-slate-900 dark:text-white mt-1 block">
             {formatCurrency(totalVolume)}
           </span>
-          <span className="text-[11px] text-slate-400 font-mono mt-0.5 block">
+          <span className="text-[11px] text-slate-400 dark:text-slate-500 font-mono mt-0.5 block">
             Across all credit cards & bank transfers
           </span>
         </div>
 
-        <div className="p-4 bg-white rounded-xl border border-slate-200">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
+          <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             Payment Processing Fees
           </span>
-          <span className="text-xl font-bold font-mono text-slate-700 mt-1 block">
+          <span className="text-xl font-bold font-mono text-slate-700 dark:text-slate-300 mt-1 block">
             {formatCurrency(totalFees)}
           </span>
-          <span className="text-[11px] text-slate-400 font-mono mt-0.5 block">
-            Stripe & Interchange fees (~2.9% + 30¢)
+          <span className="text-[11px] text-slate-400 dark:text-slate-500 font-mono mt-0.5 block">
+            Gateway & Interchange fees
           </span>
         </div>
 
-        <div className="p-4 bg-white rounded-xl border border-slate-200">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
+          <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             Net Bank Payout
           </span>
-          <span className="text-xl font-bold font-mono text-emerald-600 mt-1 block">
+          <span className="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-1 block">
             {formatCurrency(netSettlement)}
           </span>
-          <span className="text-[11px] text-emerald-700 font-mono mt-0.5 block">
+          <span className="text-[11px] text-emerald-700 dark:text-emerald-500 font-mono mt-0.5 block">
             Ready for standard 2-day rolling payout
           </span>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors">
         <div className="relative flex-1 max-w-md">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by transaction ID (tx_...), customer or email..."
-            className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-hidden focus:border-blue-500 bg-slate-50/50"
+            className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-hidden focus:border-blue-500 bg-slate-50/50 dark:bg-slate-800/70 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500"
           />
-          <Search className="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" />
+          <Search className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-2.5 top-2.5" />
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center p-1 bg-slate-100 rounded-lg">
+          <div className="flex items-center p-1 bg-slate-100 dark:bg-slate-800 rounded-lg">
             {(['all', 'succeeded', 'refunded', 'failed'] as const).map((st) => (
               <button
                 key={st}
                 onClick={() => setStatusFilter(st)}
                 className={`px-3 py-1 text-xs font-medium rounded-md capitalize transition-colors cursor-pointer ${
                   statusFilter === st
-                    ? 'bg-white text-slate-900 shadow-xs font-semibold'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-semibold'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 {st}
@@ -165,7 +165,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({ onRefundPayment }) =
           <select
             value={methodFilter}
             onChange={(e) => setMethodFilter(e.target.value)}
-            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-hidden"
+            className="px-3 py-1.5 text-xs border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-hidden cursor-pointer"
           >
             <option value="all">All Gateways</option>
             <option value="visa">Visa</option>
@@ -177,10 +177,10 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({ onRefundPayment }) =
       </div>
 
       {/* Transactions Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xs transition-colors">
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider">
+            <thead className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">
               <tr>
                 <th className="px-5 py-3">Transaction ID</th>
                 <th className="px-5 py-3">Customer</th>
@@ -193,61 +193,61 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({ onRefundPayment }) =
                 <th className="px-5 py-3 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {filteredPayments.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="px-5 py-12 text-center text-slate-400">
+                  <td colSpan={9} className="px-5 py-12 text-center text-slate-400 dark:text-slate-500">
                     No payment transactions matched the current filters.
                   </td>
                 </tr>
               ) : (
                 filteredPayments.map((p) => (
-                  <tr key={p.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="px-5 py-3.5 font-mono font-medium text-slate-900">
+                  <tr key={p.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="px-5 py-3.5 font-mono font-medium text-slate-900 dark:text-white">
                       {p.id}
                       {p.invoiceId && (
-                        <span className="text-[10px] text-slate-400 block font-mono">
+                        <span className="text-[10px] text-slate-400 dark:text-slate-500 block font-mono">
                           Ref: {p.invoiceId}
                         </span>
                       )}
                     </td>
 
                     <td className="px-5 py-3.5">
-                      <div className="font-semibold text-slate-900">{p.customerName}</div>
-                      <div className="text-[11px] text-slate-400 font-mono">{p.customerEmail}</div>
+                      <div className="font-semibold text-slate-900 dark:text-white">{p.customerName}</div>
+                      <div className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">{p.customerEmail}</div>
                     </td>
 
                     <td className="px-5 py-3.5">
-                      <div className="flex items-center gap-1.5 text-slate-700 capitalize font-medium">
-                        <CreditCard className="w-3.5 h-3.5 text-slate-400" />
+                      <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 capitalize font-medium">
+                        <CreditCard className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                         <span>{p.paymentMethod}</span>
-                        {p.last4 && <span className="font-mono text-slate-400">•••• {p.last4}</span>}
+                        {p.last4 && <span className="font-mono text-slate-400 dark:text-slate-500">•••• {p.last4}</span>}
                       </div>
                     </td>
 
-                    <td className="px-5 py-3.5 text-right font-mono font-bold text-slate-900">
+                    <td className="px-5 py-3.5 text-right font-mono font-bold text-slate-900 dark:text-white">
                       {formatCurrency(p.amount)}
                     </td>
 
-                    <td className="px-5 py-3.5 text-right font-mono text-slate-500">
+                    <td className="px-5 py-3.5 text-right font-mono text-slate-500 dark:text-slate-400">
                       {formatCurrency(p.fee)}
                     </td>
 
-                    <td className="px-5 py-3.5 text-right font-mono font-semibold text-slate-800">
+                    <td className="px-5 py-3.5 text-right font-mono font-semibold text-slate-800 dark:text-slate-200">
                       {formatCurrency(p.net)}
                     </td>
 
                     <td className="px-5 py-3.5 text-center">
                       <span className={`inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase ${
-                        p.status === 'succeeded' ? 'bg-emerald-100 text-emerald-800' :
-                        p.status === 'failed' ? 'bg-rose-100 text-rose-800' :
-                        'bg-amber-100 text-amber-800'
+                        p.status === 'succeeded' ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50' :
+                        p.status === 'failed' ? 'bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800/50' :
+                        'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/50'
                       }`}>
                         {p.status}
                       </span>
                     </td>
 
-                    <td className="px-5 py-3.5 font-mono text-slate-500 text-[11px]">
+                    <td className="px-5 py-3.5 font-mono text-slate-500 dark:text-slate-400 text-[11px]">
                       {p.date}
                     </td>
 
@@ -255,7 +255,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({ onRefundPayment }) =
                       {p.status === 'succeeded' && (
                         <button
                           onClick={() => onRefundPayment(p.id)}
-                          className="px-2 py-1 text-[11px] font-medium text-slate-700 hover:text-rose-600 bg-slate-100 hover:bg-rose-50 rounded transition-colors cursor-pointer"
+                          className="px-2 py-1 text-[11px] font-medium text-slate-700 dark:text-slate-200 hover:text-rose-600 dark:hover:text-rose-400 bg-slate-100 dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-slate-750 rounded transition-colors cursor-pointer"
                         >
                           Refund
                         </button>
@@ -271,7 +271,7 @@ export const PaymentsView: React.FC<PaymentsViewProps> = ({ onRefundPayment }) =
                       )}
 
                       {p.status === 'refunded' && (
-                        <span className="text-[11px] text-amber-600 font-medium font-mono">
+                        <span className="text-[11px] text-amber-600 dark:text-amber-400 font-medium font-mono">
                           Refunded: -{formatCurrency(p.refundAmount || p.amount)}
                         </span>
                       )}

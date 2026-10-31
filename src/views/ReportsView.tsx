@@ -73,10 +73,10 @@ export const ReportsView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
         <div>
-          <h2 className="text-lg font-bold text-slate-900 tracking-tight">Financial Reports & ASC 606 Analytics</h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Financial Reports & ASC 606 Analytics</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Audit-ready revenue recognition, cohort retention heatmaps, and SaaS capital efficiency metrics
           </p>
         </div>
@@ -92,126 +92,126 @@ export const ReportsView: React.FC = () => {
 
       {/* SaaS North Star Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 bg-white rounded-xl border border-slate-200">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
+          <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             Net Revenue Retention (NRR)
           </span>
           <div className="flex items-baseline justify-between mt-1">
-            <span className="text-2xl font-bold font-mono text-slate-900">114.2%</span>
-            <span className="text-xs font-semibold font-mono text-emerald-600">+2.4%</span>
+            <span className="text-2xl font-bold font-mono text-slate-900 dark:text-white">114.2%</span>
+            <span className="text-xs font-semibold font-mono text-emerald-600 dark:text-emerald-400">+2.4%</span>
           </div>
-          <span className="text-[11px] text-slate-400 mt-0.5 block">
+          <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 block">
             Expansion outpacing churn (&gt;100% net expansion)
           </span>
         </div>
 
-        <div className="p-4 bg-white rounded-xl border border-slate-200">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
+          <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             Gross Revenue Retention (GRR)
           </span>
           <div className="flex items-baseline justify-between mt-1">
-            <span className="text-2xl font-bold font-mono text-slate-900">94.8%</span>
-            <span className="text-xs font-semibold font-mono text-emerald-600">Top Quartile</span>
+            <span className="text-2xl font-bold font-mono text-slate-900 dark:text-white">94.8%</span>
+            <span className="text-xs font-semibold font-mono text-emerald-600 dark:text-emerald-400">Top Quartile</span>
           </div>
-          <span className="text-[11px] text-slate-400 mt-0.5 block">
+          <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 block">
             Excluding expansion revenue
           </span>
         </div>
 
-        <div className="p-4 bg-white rounded-xl border border-slate-200">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
+          <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             SaaS Quick Ratio
           </span>
           <div className="flex items-baseline justify-between mt-1">
-            <span className="text-2xl font-bold font-mono text-slate-900">{quickRatio}x</span>
-            <span className="text-xs font-semibold text-emerald-600 font-mono">Elite &gt; 4.0</span>
+            <span className="text-2xl font-bold font-mono text-slate-900 dark:text-white">{quickRatio}x</span>
+            <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 font-mono">Elite &gt; 4.0</span>
           </div>
-          <span className="text-[11px] text-slate-400 mt-0.5 block">
+          <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 block">
             (New + Expansion) / (Churn + Contraction)
           </span>
         </div>
 
-        <div className="p-4 bg-white rounded-xl border border-slate-200">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
+          <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             LTV to CAC Ratio
           </span>
           <div className="flex items-baseline justify-between mt-1">
-            <span className="text-2xl font-bold font-mono text-slate-900">3.8x</span>
-            <span className="text-xs font-semibold text-slate-600 font-mono">7.2 mo payback</span>
+            <span className="text-2xl font-bold font-mono text-slate-900 dark:text-white">3.8x</span>
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 font-mono">7.2 mo payback</span>
           </div>
-          <span className="text-[11px] text-slate-400 mt-0.5 block">
+          <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 block">
             Healthy sustainable unit economics
           </span>
         </div>
       </div>
 
       {/* MRR Waterfall Breakdown Section */}
-      <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 space-y-4 transition-colors">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
           <div>
-            <h3 className="text-sm font-bold text-slate-900">Monthly Recurring Revenue (MRR) Waterfall</h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white">Monthly Recurring Revenue (MRR) Waterfall</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Deconstructed revenue components showing new subscriber gains, tier expansions, and churn losses
             </p>
           </div>
-          <span className="text-xs font-mono font-bold text-blue-600">
+          <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400">
             Net Monthly Add: +{formatCurrency(netMrrGrowth)}
           </span>
         </div>
 
         {/* Waterfall Bars Graphic */}
         <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 pt-2">
-          <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center">
-            <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
+          <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-700 text-center">
+            <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
               Starting MRR
             </span>
-            <span className="text-sm font-bold font-mono text-slate-800 mt-1 block">
+            <span className="text-sm font-bold font-mono text-slate-800 dark:text-slate-200 mt-1 block">
               {formatCurrency(waterfall.startingMrr)}
             </span>
-            <div className="w-full h-1 bg-slate-300 rounded mt-2" />
+            <div className="w-full h-1 bg-slate-300 dark:bg-slate-600 rounded mt-2" />
           </div>
 
-          <div className="p-3 bg-emerald-50/70 rounded-lg border border-emerald-200 text-center">
-            <span className="text-[10px] font-semibold text-emerald-800 uppercase tracking-wider block">
+          <div className="p-3 bg-emerald-50/70 dark:bg-emerald-950/40 rounded-lg border border-emerald-200 dark:border-emerald-800/60 text-center">
+            <span className="text-[10px] font-semibold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider block">
               + New Subscriptions
             </span>
-            <span className="text-sm font-bold font-mono text-emerald-700 mt-1 block">
+            <span className="text-sm font-bold font-mono text-emerald-700 dark:text-emerald-400 mt-1 block">
               +{formatCurrency(waterfall.newMrr)}
             </span>
             <div className="w-full h-1 bg-emerald-500 rounded mt-2" />
           </div>
 
-          <div className="p-3 bg-blue-50/70 rounded-lg border border-blue-200 text-center">
-            <span className="text-[10px] font-semibold text-blue-800 uppercase tracking-wider block">
+          <div className="p-3 bg-blue-50/70 dark:bg-blue-950/40 rounded-lg border border-blue-200 dark:border-blue-800/60 text-center">
+            <span className="text-[10px] font-semibold text-blue-800 dark:text-blue-300 uppercase tracking-wider block">
               + Expansion MRR
             </span>
-            <span className="text-sm font-bold font-mono text-blue-700 mt-1 block">
+            <span className="text-sm font-bold font-mono text-blue-700 dark:text-blue-400 mt-1 block">
               +{formatCurrency(waterfall.expansionMrr)}
             </span>
             <div className="w-full h-1 bg-blue-500 rounded mt-2" />
           </div>
 
-          <div className="p-3 bg-amber-50/70 rounded-lg border border-amber-200 text-center">
-            <span className="text-[10px] font-semibold text-amber-800 uppercase tracking-wider block">
+          <div className="p-3 bg-amber-50/70 dark:bg-amber-950/40 rounded-lg border border-amber-200 dark:border-amber-800/60 text-center">
+            <span className="text-[10px] font-semibold text-amber-800 dark:text-amber-300 uppercase tracking-wider block">
               - Contraction
             </span>
-            <span className="text-sm font-bold font-mono text-amber-700 mt-1 block">
+            <span className="text-sm font-bold font-mono text-amber-700 dark:text-amber-400 mt-1 block">
               {formatCurrency(waterfall.contractionMrr)}
             </span>
             <div className="w-full h-1 bg-amber-500 rounded mt-2" />
           </div>
 
-          <div className="p-3 bg-rose-50/70 rounded-lg border border-rose-200 text-center">
-            <span className="text-[10px] font-semibold text-rose-800 uppercase tracking-wider block">
+          <div className="p-3 bg-rose-50/70 dark:bg-rose-950/40 rounded-lg border border-rose-200 dark:border-rose-800/60 text-center">
+            <span className="text-[10px] font-semibold text-rose-800 dark:text-rose-300 uppercase tracking-wider block">
               - Churned MRR
             </span>
-            <span className="text-sm font-bold font-mono text-rose-700 mt-1 block">
+            <span className="text-sm font-bold font-mono text-rose-700 dark:text-rose-400 mt-1 block">
               {formatCurrency(waterfall.churnedMrr)}
             </span>
             <div className="w-full h-1 bg-rose-500 rounded mt-2" />
           </div>
 
-          <div className="p-3 bg-slate-900 rounded-lg border border-slate-800 text-center text-white">
+          <div className="p-3 bg-slate-900 dark:bg-slate-800 rounded-lg border border-slate-800 dark:border-slate-700 text-center text-white">
             <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
               Ending MRR
             </span>
@@ -224,22 +224,22 @@ export const ReportsView: React.FC = () => {
       </div>
 
       {/* Cohort Retention Heatmap */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs">
-        <div className="p-5 border-b border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xs transition-colors">
+        <div className="p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 className="text-sm font-bold text-slate-900">Subscriber Cohort Retention Heatmap</h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white">Subscriber Cohort Retention Heatmap</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Percentage of paying subscribers retained each month following initial sign-up cohort
             </p>
           </div>
-          <div className="text-xs font-mono text-slate-500">
+          <div className="text-xs font-mono text-slate-500 dark:text-slate-400">
             Target retention &gt; 88% at M+5
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider">
+            <thead className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">
               <tr>
                 <th className="px-5 py-3">Cohort Month</th>
                 <th className="px-5 py-3 text-center">Starting Accounts</th>
@@ -251,29 +251,31 @@ export const ReportsView: React.FC = () => {
                 <th className="px-4 py-3 text-center">Month 5</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {cohorts.map((row) => (
-                <tr key={row.cohort} className="hover:bg-slate-50/80">
-                  <td className="px-5 py-3 font-semibold text-slate-900">
+                <tr key={row.cohort} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
+                  <td className="px-5 py-3 font-semibold text-slate-900 dark:text-white">
                     {row.cohort}
                   </td>
-                  <td className="px-5 py-3 text-center font-mono text-slate-600">
+                  <td className="px-5 py-3 text-center font-mono text-slate-600 dark:text-slate-400">
                     {row.size}
                   </td>
                   {[row.m0, row.m1, row.m2, row.m3, row.m4, row.m5].map((val, idx) => {
                     if (val === null) {
                       return (
-                        <td key={idx} className="px-4 py-3 text-center text-slate-300">
+                        <td key={idx} className="px-4 py-3 text-center text-slate-300 dark:text-slate-600">
                           —
                         </td>
                       );
                     }
-                    // Color intensity based on retention percentage
                     const bgClass =
-                      val >= 97 ? 'bg-emerald-50 text-emerald-800 font-semibold' :
-                      val >= 93 ? 'bg-emerald-50/50 text-emerald-700' :
-                      val >= 90 ? 'bg-blue-50 text-blue-700' :
-                      'bg-slate-50 text-slate-700';
+                      val >= 97
+                        ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-semibold'
+                        : val >= 93
+                        ? 'bg-emerald-50/50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400'
+                        : val >= 90
+                        ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300'
+                        : 'bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300';
 
                     return (
                       <td key={idx} className={`px-4 py-3 text-center font-mono ${bgClass}`}>

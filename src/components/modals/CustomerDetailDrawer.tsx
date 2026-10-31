@@ -71,33 +71,33 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/50 backdrop-blur-xs">
       <div
-        className="w-full max-w-xl bg-white shadow-2xl border-l border-slate-200 h-full flex flex-col overflow-hidden animate-in slide-in-from-right duration-200"
+        className="w-full max-w-xl bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-800 h-full flex flex-col overflow-hidden animate-in slide-in-from-right duration-200 transition-colors"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-sm flex items-center justify-center">
               {customer.name.split(' ').map(n => n[0]).join('')}
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-slate-900">{customer.name}</h2>
+                <h2 className="text-base font-bold text-slate-900 dark:text-white">{customer.name}</h2>
                 <span className={`text-[10px] font-semibold px-2 py-0.5 rounded capitalize ${
-                  customer.status === 'active' ? 'bg-emerald-100 text-emerald-800' :
-                  customer.status === 'trialing' ? 'bg-blue-100 text-blue-800' :
-                  customer.status === 'delinquent' ? 'bg-rose-100 text-rose-800' :
-                  'bg-slate-200 text-slate-700'
+                  customer.status === 'active' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' :
+                  customer.status === 'trialing' ? 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300' :
+                  customer.status === 'delinquent' ? 'bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300' :
+                  'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
                 }`}>
                   {customer.status}
                 </span>
               </div>
-              <div className="text-xs text-slate-500 font-medium">{customer.company}</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">{customer.company}</div>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200/60 cursor-pointer"
+            className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded-lg hover:bg-slate-200/60 dark:hover:bg-slate-800 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -107,41 +107,41 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Quick Metrics */}
           <div className="grid grid-cols-3 gap-3">
-            <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-800">
+              <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
                 Current MRR
               </span>
-              <span className="text-lg font-bold font-mono text-slate-900">
+              <span className="text-lg font-bold font-mono text-slate-900 dark:text-white">
                 {formatCurrency(customer.mrr)}
               </span>
             </div>
-            <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-800">
+              <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
                 Lifetime Value
               </span>
-              <span className="text-lg font-bold font-mono text-slate-900">
+              <span className="text-lg font-bold font-mono text-slate-900 dark:text-white">
                 {formatCurrency(customer.lifetimeSpend)}
               </span>
             </div>
-            <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-800">
+              <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
                 Plan Tier
               </span>
-              <span className="text-sm font-bold text-blue-600 block truncate mt-0.5">
+              <span className="text-sm font-bold text-blue-600 dark:text-blue-400 block truncate mt-0.5">
                 {currentPlan.name}
               </span>
             </div>
           </div>
 
           {/* Active Subscription Control Section */}
-          <div className="p-4 rounded-xl border border-blue-100 bg-blue-50/30 space-y-3">
+          <div className="p-4 rounded-xl border border-blue-100 dark:border-blue-900/50 bg-blue-50/30 dark:bg-blue-950/20 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-blue-600" />
+              <span className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 Active Subscription Contract
               </span>
               {activeSubscription && (
-                <span className="text-xs font-mono text-slate-600">
+                <span className="text-xs font-mono text-slate-600 dark:text-slate-400">
                   Renews: {activeSubscription.renewalDate}
                 </span>
               )}
@@ -149,11 +149,11 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
 
             {activeSubscription ? (
               <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs text-slate-700 bg-white p-3 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
                   <div>
-                    <span className="font-semibold text-slate-900">{activeSubscription.planName} Plan</span>
-                    <span className="text-slate-400 ml-1.5">({activeSubscription.billingCycle})</span>
-                    <div className="text-[11px] text-slate-500 font-mono mt-0.5">
+                    <span className="font-semibold text-slate-900 dark:text-white">{activeSubscription.planName} Plan</span>
+                    <span className="text-slate-400 dark:text-slate-500 ml-1.5">({activeSubscription.billingCycle})</span>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">
                       {formatCurrency(activeSubscription.amount)} / {activeSubscription.billingCycle === 'annual' ? 'year' : 'month'} · {activeSubscription.seats} seats
                     </div>
                   </div>
@@ -161,10 +161,10 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                     {activeSubscription.status === 'active' ? (
                       <button
                         onClick={() => pauseSubscription(activeSubscription.id)}
-                        className="px-2.5 py-1 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded flex items-center gap-1 cursor-pointer"
+                        className="px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded flex items-center gap-1 cursor-pointer"
                         title="Pause recurring billing"
                       >
-                        <Pause className="w-3 h-3 text-slate-500" />
+                        <Pause className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                         Pause
                       </button>
                     ) : (
@@ -179,10 +179,9 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
 
                     <button
                       onClick={() => {
-                        const reason = prompt('Reason for canceling subscription:');
-                        cancelSubscription(activeSubscription.id, reason || undefined);
+                        cancelSubscription(activeSubscription.id, 'Canceled from account drawer');
                       }}
-                      className="px-2.5 py-1 text-xs font-medium text-rose-600 hover:bg-rose-50 rounded flex items-center gap-1 cursor-pointer"
+                      className="px-2.5 py-1 text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded flex items-center gap-1 cursor-pointer"
                     >
                       <XCircle className="w-3 h-3" />
                       Cancel
@@ -195,7 +194,7 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                   <select
                     value={selectedPlanUpgrade}
                     onChange={(e) => setSelectedPlanUpgrade(e.target.value)}
-                    className="flex-1 px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-hidden focus:border-blue-500"
+                    className="flex-1 px-3 py-1.5 text-xs bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-hidden focus:border-blue-500 cursor-pointer"
                   >
                     <option value="">Change subscription tier...</option>
                     {plans.map((p) => (
@@ -214,7 +213,7 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                 </div>
               </div>
             ) : (
-              <div className="text-xs text-slate-500 italic p-3 bg-white rounded-lg border border-slate-200">
+              <div className="text-xs text-slate-500 dark:text-slate-400 italic p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
                 No active recurring subscription. This customer is currently canceled or inactive.
               </div>
             )}
@@ -222,27 +221,27 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
 
           {/* Account Details & Billing Address */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+            <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Account Information
             </h3>
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5 text-xs">
-              <div className="flex items-center gap-2 text-slate-700">
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2.5 text-xs">
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                 <Mail className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                 <span className="font-mono">{customer.email}</span>
               </div>
               {customer.phone && (
-                <div className="flex items-center gap-2 text-slate-700">
+                <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                   <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                   <span>{customer.phone}</span>
                 </div>
               )}
               {customer.taxId && (
-                <div className="flex items-center gap-2 text-slate-700">
-                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider shrink-0">TAX ID:</span>
+                <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider shrink-0">TAX / GSTIN:</span>
                   <span className="font-mono">{customer.taxId}</span>
                 </div>
               )}
-              <div className="flex items-start gap-2 text-slate-700 pt-1 border-t border-slate-200">
+              <div className="flex items-start gap-2 text-slate-700 dark:text-slate-300 pt-1 border-t border-slate-200 dark:border-slate-700">
                 <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
                 <div className="leading-snug">
                   {customer.billingAddress.street}, {customer.billingAddress.city}, {customer.billingAddress.state} {customer.billingAddress.postalCode}, {customer.billingAddress.country}
@@ -253,24 +252,24 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
 
           {/* Payment Method on File */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+            <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Payment Method on File
             </h3>
-            <div className="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+            <div className="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 rounded-xl text-xs">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-white rounded-lg border border-slate-200 text-slate-700">
-                  <CreditCard className="w-4 h-4 text-blue-600" />
+                <div className="p-2 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200">
+                  <CreditCard className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900 capitalize">
+                  <div className="font-semibold text-slate-900 dark:text-white capitalize">
                     {customer.paymentMethod.brand} ending in {customer.paymentMethod.last4}
                   </div>
-                  <div className="text-[11px] text-slate-500 font-mono">
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                     Expires {customer.paymentMethod.expMonth.toString().padStart(2, '0')}/{customer.paymentMethod.expYear}
                   </div>
                 </div>
               </div>
-              <span className="text-[10px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              <span className="text-[10px] font-medium text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800/40">
                 Default
               </span>
             </div>
@@ -279,36 +278,36 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
           {/* Invoice History */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                 Billing Statements ({pastInvoices.length})
               </h3>
             </div>
             {pastInvoices.length === 0 ? (
-              <div className="text-xs text-slate-400 italic p-3 bg-slate-50 rounded-lg border border-slate-200">
+              <div className="text-xs text-slate-400 dark:text-slate-500 italic p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-800">
                 No past invoices on record.
               </div>
             ) : (
-              <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden">
+              <div className="divide-y divide-slate-100 dark:divide-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
                 {pastInvoices.map((inv) => (
                   <div
                     key={inv.id}
                     onClick={() => onViewInvoice(inv.id)}
-                    className="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors cursor-pointer text-xs"
+                    className="p-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors cursor-pointer text-xs"
                   >
                     <div>
-                      <div className="font-mono font-semibold text-slate-900 flex items-center gap-1.5">
+                      <div className="font-mono font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
                         <FileText className="w-3.5 h-3.5 text-slate-400" />
                         {inv.number}
                       </div>
-                      <div className="text-[11px] text-slate-500 font-mono mt-0.5">
+                      <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">
                         Issued: {inv.issueDate}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-mono font-bold text-slate-900">{formatCurrency(inv.total)}</div>
+                      <div className="font-mono font-bold text-slate-900 dark:text-white">{formatCurrency(inv.total)}</div>
                       <span className={`inline-block text-[10px] font-semibold uppercase ${
-                        inv.status === 'paid' ? 'text-emerald-600' :
-                        inv.status === 'overdue' ? 'text-rose-600' : 'text-blue-600'
+                        inv.status === 'paid' ? 'text-emerald-600 dark:text-emerald-400' :
+                        inv.status === 'overdue' ? 'text-rose-600 dark:text-rose-400' : 'text-blue-600 dark:text-blue-400'
                       }`}>
                         {inv.status}
                       </span>
@@ -322,7 +321,7 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
           {/* Internal Notes */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                 Internal Account Notes
               </h3>
               {!editNotes ? (
@@ -331,7 +330,7 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                     setNotesVal(customer.notes || '');
                     setEditNotes(true);
                   }}
-                  className="text-xs text-blue-600 hover:text-blue-700 font-medium cursor-pointer"
+                  className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium cursor-pointer"
                 >
                   Edit Notes
                 </button>
@@ -339,13 +338,13 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setEditNotes(false)}
-                    className="text-xs text-slate-500 hover:text-slate-700 cursor-pointer"
+                    className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleSaveNotes}
-                    className="text-xs font-semibold text-blue-600 hover:text-blue-700 cursor-pointer"
+                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 cursor-pointer"
                   >
                     Save
                   </button>
@@ -359,26 +358,24 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                 value={notesVal}
                 onChange={(e) => setNotesVal(e.target.value)}
                 placeholder="Add account notes, SLA details, key contacts..."
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:border-blue-500"
+                className="w-full px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg focus:outline-hidden focus:border-blue-500"
               />
             ) : (
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-600 leading-relaxed italic">
+              <div className="p-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-300 leading-relaxed italic">
                 {customer.notes || 'No customer notes entered.'}
               </div>
             )}
           </div>
 
           {/* Danger Zone */}
-          <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
-            <span className="text-xs text-slate-500">Member since {customer.createdAt}</span>
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <span className="text-xs text-slate-500 dark:text-slate-400">Member since {customer.createdAt}</span>
             <button
               onClick={() => {
-                if (confirm(`Are you sure you want to delete ${customer.name}? All active subscriptions will be terminated.`)) {
-                  deleteCustomer(customer.id);
-                  onClose();
-                }
+                deleteCustomer(customer.id);
+                onClose();
               }}
-              className="px-3 py-1.5 text-xs font-medium text-rose-600 hover:bg-rose-50 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-3 py-1.5 text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span>Delete Customer</span>

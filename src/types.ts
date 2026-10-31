@@ -9,6 +9,8 @@ export type NavigationTab =
   | 'reports';
 
 export type TimeRange = '7d' | '30d' | '90d' | '12m';
+export type AppTheme = 'light' | 'dark';
+export type CurrencyCode = 'INR' | 'USD' | 'EUR' | 'GBP';
 
 export interface Customer {
   id: string;

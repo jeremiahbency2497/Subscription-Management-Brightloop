@@ -86,29 +86,29 @@ export const GlobalSearchModal: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-slate-900/60 backdrop-blur-xs">
       <div
-        className="w-full max-w-2xl bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col"
+        className="w-full max-w-2xl bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col transition-colors"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-200">
-          <Search className="w-5 h-5 text-slate-400 shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-200 dark:border-slate-800">
+          <Search className="w-5 h-5 text-slate-400 dark:text-slate-500 shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search subscriptions, customers, invoices, plans..."
-            className="flex-1 bg-transparent text-sm text-slate-900 placeholder:text-slate-400 focus:outline-hidden"
+            className="flex-1 bg-transparent text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-hidden"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="text-slate-400 hover:text-slate-600 p-1"
+              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           )}
-          <kbd className="text-[11px] font-mono bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-slate-500">
+          <kbd className="text-[11px] font-mono bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded text-slate-500 dark:text-slate-400">
             ESC
           </kbd>
         </div>
@@ -116,13 +116,13 @@ export const GlobalSearchModal: React.FC = () => {
         {/* Results Area */}
         <div className="max-h-96 overflow-y-auto p-3 space-y-4">
           {!trimmed && (
-            <div className="py-8 text-center text-xs text-slate-400">
+            <div className="py-8 text-center text-xs text-slate-400 dark:text-slate-500">
               Type to search by customer name, company, invoice number (e.g. INV-2026-1092), or plan tier.
             </div>
           )}
 
           {trimmed && totalResults === 0 && (
-            <div className="py-10 text-center text-xs text-slate-500">
+            <div className="py-10 text-center text-xs text-slate-500 dark:text-slate-400">
               No matching records found for "{query}".
             </div>
           )}
@@ -130,7 +130,7 @@ export const GlobalSearchModal: React.FC = () => {
           {/* Customer matches */}
           {matchedCustomers.length > 0 && (
             <div>
-              <div className="px-2 py-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+              <div className="px-2 py-1 text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                 <Users className="w-3.5 h-3.5" />
                 <span>Customers</span>
               </div>
@@ -143,15 +143,15 @@ export const GlobalSearchModal: React.FC = () => {
                       setSelectedCustomerId(cust.id);
                       setIsSearchOpen(false);
                     }}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer text-left group"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors cursor-pointer text-left group"
                   >
                     <div>
-                      <div className="text-xs font-semibold text-slate-900 group-hover:text-blue-600">
-                        {cust.name} <span className="font-normal text-slate-500">({cust.company})</span>
+                      <div className="text-xs font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        {cust.name} <span className="font-normal text-slate-500 dark:text-slate-400">({cust.company})</span>
                       </div>
-                      <div className="text-[11px] text-slate-400">{cust.email} · Spend: {formatCurrency(cust.lifetimeSpend)}</div>
+                      <div className="text-[11px] text-slate-400 dark:text-slate-500">{cust.email} · Spend: {formatCurrency(cust.lifetimeSpend)}</div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 transition-transform" />
                   </button>
                 ))}
               </div>
@@ -161,7 +161,7 @@ export const GlobalSearchModal: React.FC = () => {
           {/* Subscription matches */}
           {matchedSubscriptions.length > 0 && (
             <div>
-              <div className="px-2 py-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+              <div className="px-2 py-1 text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>Subscriptions</span>
               </div>
@@ -173,17 +173,17 @@ export const GlobalSearchModal: React.FC = () => {
                       setCurrentTab('subscriptions');
                       setIsSearchOpen(false);
                     }}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer text-left group"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors cursor-pointer text-left group"
                   >
                     <div>
-                      <div className="text-xs font-semibold text-slate-900 group-hover:text-blue-600">
+                      <div className="text-xs font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
                         {sub.customerName} · {sub.planName} Tier
                       </div>
-                      <div className="text-[11px] text-slate-400 font-mono">
+                      <div className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">
                         {formatCurrency(sub.amount)} / {sub.billingCycle} · Renewal: {sub.renewalDate}
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 transition-transform" />
                   </button>
                 ))}
               </div>
@@ -193,7 +193,7 @@ export const GlobalSearchModal: React.FC = () => {
           {/* Invoice matches */}
           {matchedInvoices.length > 0 && (
             <div>
-              <div className="px-2 py-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+              <div className="px-2 py-1 text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                 <FileText className="w-3.5 h-3.5" />
                 <span>Invoices</span>
               </div>
@@ -205,17 +205,17 @@ export const GlobalSearchModal: React.FC = () => {
                       setCurrentTab('invoices');
                       setIsSearchOpen(false);
                     }}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer text-left group"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors cursor-pointer text-left group"
                   >
                     <div>
-                      <div className="text-xs font-semibold text-slate-900 group-hover:text-blue-600">
+                      <div className="text-xs font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
                         {inv.number} · {inv.company}
                       </div>
-                      <div className="text-[11px] text-slate-400 font-mono">
+                      <div className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">
                         {formatCurrency(inv.total)} · Due {inv.dueDate} · Status: {inv.status.toUpperCase()}
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 transition-transform" />
                   </button>
                 ))}
               </div>
@@ -225,7 +225,7 @@ export const GlobalSearchModal: React.FC = () => {
           {/* Plan matches */}
           {matchedPlans.length > 0 && (
             <div>
-              <div className="px-2 py-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+              <div className="px-2 py-1 text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                 <Package className="w-3.5 h-3.5" />
                 <span>Plans</span>
               </div>
@@ -237,17 +237,17 @@ export const GlobalSearchModal: React.FC = () => {
                       setCurrentTab('products');
                       setIsSearchOpen(false);
                     }}
-                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer text-left group"
+                    className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors cursor-pointer text-left group"
                   >
                     <div>
-                      <div className="text-xs font-semibold text-slate-900 group-hover:text-blue-600">
+                      <div className="text-xs font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
                         {plan.name} Plan ({plan.tierCode})
                       </div>
-                      <div className="text-[11px] text-slate-400">
+                      <div className="text-[11px] text-slate-400 dark:text-slate-500">
                         {formatCurrency(plan.priceMonthly)}/mo · {plan.subscribersCount} subscribers
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 transition-transform" />
                   </button>
                 ))}
               </div>
@@ -256,7 +256,7 @@ export const GlobalSearchModal: React.FC = () => {
         </div>
 
         {/* Footer shortcuts */}
-        <div className="px-4 py-2.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-400">
+        <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-850/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
           <span>Navigate with arrow keys or click to open</span>
           <span>Brightloop Quick Finder</span>
         </div>

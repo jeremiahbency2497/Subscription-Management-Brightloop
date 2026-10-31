@@ -26,9 +26,12 @@ interface BrightloopContextType {
   setCurrentTab: (tab: NavigationTab) => void;
   sandboxMode: boolean;
   setSandboxMode: (enabled: boolean) => void;
-  currency: 'USD' | 'EUR' | 'GBP';
-  setCurrency: (c: 'USD' | 'EUR' | 'GBP') => void;
+  currency: 'INR' | 'USD' | 'EUR' | 'GBP';
+  setCurrency: (c: 'INR' | 'USD' | 'EUR' | 'GBP') => void;
   formatCurrency: (amount: number) => string;
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
+  toggleTheme: () => void;
 
   // Search Modal
   isSearchOpen: boolean;
@@ -97,38 +100,57 @@ const BrightloopContext = createContext<BrightloopContextType | undefined>(undef
 export const BrightloopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentTab, setCurrentTab] = useState<NavigationTab>('overview');
   const [sandboxMode, setSandboxMode] = useState<boolean>(false);
-  const [currency, setCurrency] = useState<'USD' | 'EUR' | 'GBP'>('USD');
+  const [currency, setCurrency] = useState<'INR' | 'USD' | 'EUR' | 'GBP'>('INR');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('bl_theme');
+    if (saved === 'dark' || saved === 'light') return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('bl_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   // Load from localStorage or fallback
   const [customers, setCustomers] = useState<Customer[]>(() => {
-    const saved = localStorage.getItem('bl_customers');
+    const saved = localStorage.getItem('bl_customers_v2');
     return saved ? JSON.parse(saved) : INITIAL_CUSTOMERS;
   });
 
   const [plans, setPlans] = useState<Plan[]>(() => {
-    const saved = localStorage.getItem('bl_plans');
+    const saved = localStorage.getItem('bl_plans_v2');
     return saved ? JSON.parse(saved) : INITIAL_PLANS;
   });
 
   const [subscriptions, setSubscriptions] = useState<Subscription[]>(() => {
-    const saved = localStorage.getItem('bl_subscriptions');
+    const saved = localStorage.getItem('bl_subscriptions_v2');
     return saved ? JSON.parse(saved) : INITIAL_SUBSCRIPTIONS;
   });
 
   const [invoices, setInvoices] = useState<Invoice[]>(() => {
-    const saved = localStorage.getItem('bl_invoices');
+    const saved = localStorage.getItem('bl_invoices_v2');
     return saved ? JSON.parse(saved) : INITIAL_INVOICES;
   });
 
   const [payments, setPayments] = useState<PaymentTransaction[]>(() => {
-    const saved = localStorage.getItem('bl_payments');
+    const saved = localStorage.getItem('bl_payments_v2');
     return saved ? JSON.parse(saved) : INITIAL_PAYMENTS;
   });
 
   const [discounts, setDiscounts] = useState<DiscountCoupon[]>(() => {
-    const saved = localStorage.getItem('bl_discounts');
+    const saved = localStorage.getItem('bl_discounts_v2');
     return saved ? JSON.parse(saved) : INITIAL_DISCOUNTS;
   });
 
@@ -137,27 +159,27 @@ export const BrightloopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   // Persist key state
   useEffect(() => {
-    localStorage.setItem('bl_customers', JSON.stringify(customers));
+    localStorage.setItem('bl_customers_v2', JSON.stringify(customers));
   }, [customers]);
 
   useEffect(() => {
-    localStorage.setItem('bl_subscriptions', JSON.stringify(subscriptions));
+    localStorage.setItem('bl_subscriptions_v2', JSON.stringify(subscriptions));
   }, [subscriptions]);
 
   useEffect(() => {
-    localStorage.setItem('bl_invoices', JSON.stringify(invoices));
+    localStorage.setItem('bl_invoices_v2', JSON.stringify(invoices));
   }, [invoices]);
 
   useEffect(() => {
-    localStorage.setItem('bl_payments', JSON.stringify(payments));
+    localStorage.setItem('bl_payments_v2', JSON.stringify(payments));
   }, [payments]);
 
   useEffect(() => {
-    localStorage.setItem('bl_plans', JSON.stringify(plans));
+    localStorage.setItem('bl_plans_v2', JSON.stringify(plans));
   }, [plans]);
 
   useEffect(() => {
-    localStorage.setItem('bl_discounts', JSON.stringify(discounts));
+    localStorage.setItem('bl_discounts_v2', JSON.stringify(discounts));
   }, [discounts]);
 
   // Toast dispatch
@@ -173,15 +195,17 @@ export const BrightloopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setToasts(prev => prev.filter(t => t.id !== id));
   };
 
-  // Currency Formatter
+  // Currency Formatter - default to Rupees (₹) with Indian number formatting
   const formatCurrency = (amount: number) => {
     const symbols = {
+      INR: '₹',
       USD: '$',
       EUR: '€',
       GBP: '£'
     };
-    const symbol = symbols[currency] || '$';
-    return `${symbol}${amount.toLocaleString('en-US', {
+    const symbol = symbols[currency] || '₹';
+    const locale = currency === 'INR' ? 'en-IN' : 'en-US';
+    return `${symbol}${Number(amount || 0).toLocaleString(locale, {
       minimumFractionDigits: amount % 1 !== 0 ? 2 : 0,
       maximumFractionDigits: 2
     })}`;
@@ -457,6 +481,9 @@ export const BrightloopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   return (
     <BrightloopContext.Provider
       value={{
+        theme,
+        setTheme,
+        toggleTheme,
         currentTab,
         setCurrentTab,
         sandboxMode,
